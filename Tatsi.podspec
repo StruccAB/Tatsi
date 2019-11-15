@@ -33,7 +33,7 @@ Pod::Spec.new do |s|
 		* Choosing the first view the user sees
                    DESC
 
-  s.homepage     = "https://github.com/awkward/Tatsi"
+  s.homepage     = "https://github.com/sweetstudio/Tatsi"
 
 
   # ―――  Spec License  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -76,7 +76,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/awkward/Tatsi.git", :tag => "#{s.version}" }
+  s.source       = { :git => "https://github.com/sweetstudio/Tatsi.git", :tag => "#{s.version}" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
