@@ -426,7 +426,11 @@ extension AssetsGridViewController {
 
     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         guard self.selectedAssets.count < self.config?.maxNumberOfSelections ?? Int.max else {
-            NotificationCenter.default.post(Notification(name: Notification.Name("test")))
+            
+            if let pickerViewController = pickerViewController {
+                delegate?.pickerViewControllerDidPickMoreAssetsThanAllowed(pickerViewController)
+            }
+            
             UIAccessibility.post(notification: UIAccessibility.Notification.announcement, argument: LocalizableStrings.accessibilityAlertSelectionLimitReached)
             
             return false
