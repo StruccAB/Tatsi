@@ -8,6 +8,7 @@
 
 import UIKit
 import Photos
+import MobileCoreServices
 
 final internal class AssetsGridViewController: UICollectionViewController, PickerViewController {
     
@@ -454,6 +455,7 @@ extension AssetsGridViewController {
             let cameraController = UIImagePickerController()
             cameraController.sourceType = UIImagePickerController.SourceType.camera
             cameraController.delegate = self
+            cameraController.mediaTypes = [kUTTypeMovie as String]
             self.present(cameraController, animated: true, completion: nil)
             collectionView.deselectItem(at: indexPath, animated: true)
         }
