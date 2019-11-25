@@ -510,10 +510,11 @@ extension AssetsGridViewController: UIImagePickerControllerDelegate, UINavigatio
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        guard let image = (info[UIImagePickerController.InfoKey.editedImage] as? UIImage) ?? (info[UIImagePickerController.InfoKey.originalImage] as? UIImage) else {
+        guard let videoURL = info[UIImagePickerController.InfoKey.mediaURL] as? URL else {
             return
         }
-        self.createAsset(from: image) { [weak self] (asset, error) in
+        
+        self.createAsset(from: videoURL) { [weak self] (asset, error) in
             if let asset = asset {
                 self?.addAsset(asset)
                 self?.selectAsset(asset)
@@ -526,27 +527,11 @@ extension AssetsGridViewController: UIImagePickerControllerDelegate, UINavigatio
         picker.dismiss(animated: true, completion: nil)
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
-        //Save the image
-        self.createAsset(from: image) { [weak self] (asset, error) in
-            if let asset = asset {
-                
-                self?.addAsset(asset)
-                self?.selectAsset(asset)
-            } else if let error = error {
-                print("Error saving photo \(error)")
-            } else {
-                self?.startFetchingAssets()
-            }
-        }
-        picker.dismiss(animated: true, completion: nil)
-    }
-    
-    func createAsset(from image: UIImage, completionHandler: @escaping ((_ asset: PHAsset?, _ error: Error?) -> Void)) {
+    func createAsset(from url: URL, completionHandler: @escaping ((_ asset: PHAsset?, _ error: Error?) -> Void)) {
         var localIdentifier: String?
         PHPhotoLibrary.shared().performChanges({
-            let request = PHAssetChangeRequest.creationRequestForAsset(from: image)
-            localIdentifier = request.placeholderForCreatedAsset?.localIdentifier
+            let request = PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: url)
+            localIdentifier = request?.placeholderForCreatedAsset?.localIdentifier
         }) { (_, error) in
             DispatchQueue.main.async {
                 if let error = error {

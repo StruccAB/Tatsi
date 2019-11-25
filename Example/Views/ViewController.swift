@@ -56,6 +56,9 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
 }
 
 extension ViewController: TatsiPickerViewControllerDelegate {
+    func pickerViewControllerDidPickMoreAssetsThanAllowed(_ pickerViewController: TatsiPickerViewController) {
+        print("More than enough!")
+    }
     
     func pickerViewController(_ pickerViewController: TatsiPickerViewController, didPickAssets assets: [PHAsset]) {
         pickerViewController.dismiss(animated: true, completion: nil)
