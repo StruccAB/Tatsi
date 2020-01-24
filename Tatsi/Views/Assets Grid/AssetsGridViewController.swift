@@ -439,7 +439,10 @@ extension AssetsGridViewController {
         return true
     }
     
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
         if let asset = self.asset(for: indexPath) {
             if !self.selectedAssets.contains(asset) {
                 guard self.selectedAssets.count < self.config?.maxNumberOfSelections ?? Int.max else {
@@ -447,7 +450,9 @@ extension AssetsGridViewController {
                     return
                 }
                 self.selectedAssets.append(asset)
-                if let maxSelection = self.config?.maxNumberOfSelections, maxSelection == 1, self.config?.finishImmediatelyWithMaximumOfOne != false {
+                if self.config?.returnAfterEachSelection ?? false {
+                    self.finishPicking(with: self.selectedAssets)
+                } else if let maxSelection = self.config?.maxNumberOfSelections, maxSelection == 1, self.config?.finishImmediatelyWithMaximumOfOne != false {
                     self.finishPicking(with: self.selectedAssets)
                 }
             }
@@ -461,13 +466,23 @@ extension AssetsGridViewController {
         }
     }
     
-    override func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        guard let asset = self.asset(for: indexPath), let index = self.selectedAssets.firstIndex(of: asset) else {
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        didDeselectItemAt indexPath: IndexPath
+    ) {
+        guard
+            let asset = self.asset(for: indexPath),
+            let index = self.selectedAssets.firstIndex(of: asset)
+        else {
             return
         }
+        
         self.selectedAssets.remove(at: index)
+        
+        if self.config?.returnAfterEachSelection ?? false {
+            self.finishPicking(with: self.selectedAssets)
+        }
     }
-    
 }
 
 // MARK: - UIScrollViewDelegate

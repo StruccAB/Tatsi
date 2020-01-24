@@ -9,6 +9,8 @@
 import UIKit
 import Photos
 
+public var selectedImage: UIImage?
+
 final internal class AssetCollectionViewCell: UICollectionViewCell {
     
     static var reuseIdentifier: String {
@@ -58,14 +60,13 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.isHidden = true
-        view.backgroundColor = UIColor.white.withAlphaComponent(0.4)
+        view.backgroundColor = UIColor.white.withAlphaComponent(0.5)
         
-        let iconView = SelectionIconView()
+        let iconView = UIImageView(image: selectedImage!)
         iconView.translatesAutoresizingMaskIntoConstraints = false
-        iconView.tintColor = TatsiConfig.default.colors.link
         view.addSubview(iconView)
-        view.bottomAnchor.constraint(equalTo: iconView.bottomAnchor, constant: 3).isActive = true
-        view.trailingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 3).isActive = true
+        view.topAnchor.constraint(equalTo: iconView.topAnchor, constant: -5).isActive = true
+        view.trailingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 5).isActive = true
         
         return view
     }()

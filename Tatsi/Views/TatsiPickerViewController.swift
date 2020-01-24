@@ -13,7 +13,7 @@ final public class TatsiPickerViewController: UINavigationController {
     
     // MARK: - Public properties
 
-    public let config: TatsiConfig
+    public var config: TatsiConfig
     
     public weak var pickerDelegate: TatsiPickerViewControllerDelegate?
     

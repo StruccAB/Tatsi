@@ -77,6 +77,7 @@ public struct TatsiConfig {
     /// If the delegate should finish immediately when maxNumberOfSelections is set to 1 and the user selects a photo
     public var finishImmediatelyWithMaximumOfOne = true
     
+    public var returnAfterEachSelection = false
     // MARK: - Internal features
     
     /// All the PHAssetCollectionSubtypes that should not be shown to the user. Based on the current config
