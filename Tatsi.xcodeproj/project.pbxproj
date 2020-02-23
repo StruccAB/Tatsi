@@ -46,6 +46,7 @@
 		0CBB287E1F1389A800254034 /* TypeIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBB287D1F1389A800254034 /* TypeIcons.swift */; };
 		0CBB28801F138B4100254034 /* LocalizableStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBB287F1F138B4100254034 /* LocalizableStrings.swift */; };
 		50DE1942236327580031438D /* TatsiColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DE1941236327580031438D /* TatsiColors.swift */; };
+		C27656262402E316000F808D /* TatsiPickerViewControllerAuthDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27656252402E316000F808D /* TatsiPickerViewControllerAuthDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,6 +130,7 @@
 		0CBB287D1F1389A800254034 /* TypeIcons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeIcons.swift; sourceTree = "<group>"; };
 		0CBB287F1F138B4100254034 /* LocalizableStrings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizableStrings.swift; sourceTree = "<group>"; };
 		50DE1941236327580031438D /* TatsiColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TatsiColors.swift; sourceTree = "<group>"; };
+		C27656252402E316000F808D /* TatsiPickerViewControllerAuthDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TatsiPickerViewControllerAuthDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -222,6 +224,7 @@
 			children = (
 				0C5B617E1F0E3521005A25CE /* TatsiPickerViewControllerDelegate.swift */,
 				0C5B61881F0E36B4005A25CE /* PickerViewController.swift */,
+				C27656252402E316000F808D /* TatsiPickerViewControllerAuthDelegate.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -534,6 +537,7 @@
 				0C5B61851F0E3681005A25CE /* CameraCollectionViewCell.swift in Sources */,
 				0C5B61841F0E3681005A25CE /* AssetCollectionViewCell.swift in Sources */,
 				0C7684491FDED59F00514164 /* ChangeAlbumArrowView.swift in Sources */,
+				C27656262402E316000F808D /* TatsiPickerViewControllerAuthDelegate.swift in Sources */,
 				0CBB287E1F1389A800254034 /* TypeIcons.swift in Sources */,
 				0CACBE891F13B21C00CD1B32 /* CameraIconView.swift in Sources */,
 				0C5B618C1F0E3924005A25CE /* AlbumImageView.swift in Sources */,

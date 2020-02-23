@@ -16,6 +16,7 @@ final public class TatsiPickerViewController: UINavigationController {
     public var config: TatsiConfig
     
     public weak var pickerDelegate: TatsiPickerViewControllerDelegate?
+    public weak var authDelegate: TatsiAuthPickerViewControllerDelegate?
     
     // MARK: - Initializers
     

@@ -36,6 +36,10 @@ extension PickerViewController where Self: UIViewController {
         return self.pickerViewController?.pickerDelegate
     }
     
+    var authDelegate: TatsiAuthPickerViewControllerDelegate? {
+        return self.pickerViewController?.authDelegate
+    }
+    
     func finishPicking(with assets: [PHAsset]) {
         guard let viewController = self.pickerViewController else {
             return

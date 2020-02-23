@@ -81,6 +81,7 @@ final internal class AuthorizationViewController: UIViewController, PickerViewCo
         
         PHPhotoLibrary.requestAuthorization { [weak self] (status) in
             DispatchQueue.main.async {
+                self?.authDelegate?.didRequestAuthorization(success: status == .authorized)
                 if status == .authorized {
                     self?.pickerViewController?.setIntialViewController()
                 } else {

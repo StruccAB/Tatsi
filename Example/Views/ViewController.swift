@@ -27,6 +27,7 @@ final class ViewController: UIViewController {
         
         let pickerViewController = TatsiPickerViewController(config: config)
         pickerViewController.pickerDelegate = self
+        pickerViewController.authDelegate = self
         self.present(pickerViewController, animated: true, completion: nil)
     }
     
@@ -39,6 +40,7 @@ final class ViewController: UIViewController {
         
         let pickerViewController = TatsiPickerViewController(config: config)
         pickerViewController.pickerDelegate = self
+        pickerViewController.authDelegate = self
         self.present(pickerViewController, animated: true, completion: nil)
     }
 
@@ -65,4 +67,10 @@ extension ViewController: TatsiPickerViewControllerDelegate {
         print("Assets \(assets)")
     }
     
+}
+
+extension ViewController: TatsiAuthPickerViewControllerDelegate {
+    func didRequestAuthorization(success: Bool) {
+        print(success)
+    }
 }
