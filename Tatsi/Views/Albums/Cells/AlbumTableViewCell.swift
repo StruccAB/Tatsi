@@ -72,6 +72,8 @@ final internal class AlbumTableViewCell: UITableViewCell {
     }
     
     private func setupView() {
+        backgroundColor = .clear
+        
         self.contentView.addSubview(self.albumImageView)
         self.contentView.addSubview(self.labelsStackView)
         

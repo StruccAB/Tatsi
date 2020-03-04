@@ -26,34 +26,18 @@ public protocol TatsiColors {
 /// Defines the default colors for Tatsi.
 public struct TatsiDefaultColors: TatsiColors {
     public var background: UIColor = {
-        if #available(iOS 13.0, *) {
-            return .systemBackground
-        } else {
-            return .white
-        }
+        return .black
     }()
 
     public var link: UIColor = {
-        if #available(iOS 13.0, *) {
-            return .link
-        } else {
-            return UIColor(red: 0.33, green: 0.63, blue: 0.97, alpha: 1.00)
-        }
+        return UIColor(red: 0.33, green: 0.63, blue: 0.97, alpha: 1.00)
     }()
 
     public let label: UIColor = {
-        if #available(iOS 13.0, *) {
-            return .label
-        } else {
-            return .black
-        }
+        return .white
     }()
 
     public let secondaryLabel: UIColor = {
-        if #available(iOS 13.0, *) {
-            return .secondaryLabel
-        } else {
-            return .gray
-        }
+        return UIColor(white: 142.0 / 255, alpha: 1.0)
     }()
 }

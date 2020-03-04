@@ -96,6 +96,12 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
     
     lazy fileprivate var doneButton: UIBarButtonItem = {
         let buttonitem = self.pickerViewController?.customDoneButtonItem() ?? UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: nil)
+
+        buttonitem.setTitleTextAttributes(
+            [NSAttributedString.Key.foregroundColor: UIColor(white: 66 / 255, alpha: 1)],
+            for: .disabled
+        )
+
         buttonitem.target = self
         buttonitem.action = #selector(AssetsGridViewController.done(_:))
         buttonitem.accessibilityIdentifier = "tatsi.button.done"
@@ -151,6 +157,8 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
         cancelButtonItem.accessibilityIdentifier = "tatsi.button.cancel"
         
         self.navigationItem.leftBarButtonItem = isRootModalViewController ? cancelButtonItem : nil
+        
+        collectionView.backgroundColor = .black
     }
     
     // MARK: - Accessibility
@@ -373,7 +381,7 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
         if !self.selectedAssets.contains(asset) {
             self.selectedAssets.append(asset)
         }
-        if let index = self.assets?.firstIndex(of: asset) {
+        if let index = self.assets?.index(of: asset) {
             let additionalIndex = self.config?.invertUserLibraryOrder == true && self.showCameraButton ? 1 : 0
             self.collectionView.selectItem(at: IndexPath(item: index + additionalIndex, section: 0), animated: false, scrollPosition: UICollectionView.ScrollPosition())
         }
@@ -561,4 +569,22 @@ extension AssetsGridViewController: UIImagePickerControllerDelegate, UINavigatio
         }
     }
     
+    func createAsset(from image: UIImage, completionHandler: @escaping ((_ asset: PHAsset?, _ error: Error?) -> Void)) {
+        var localIdentifier: String?
+        PHPhotoLibrary.shared().performChanges({
+            let request = PHAssetChangeRequest.creationRequestForAsset(from: image)
+            localIdentifier = request.placeholderForCreatedAsset?.localIdentifier
+        }) { (_, error) in
+            DispatchQueue.main.async {
+                if let error = error {
+                    completionHandler(nil, error)
+                } else if let localIdentifier = localIdentifier, let asset = PHAsset.fetchAssets(withLocalIdentifiers: [localIdentifier], options: nil).firstObject {
+                    completionHandler(asset, nil)
+                } else {
+                    completionHandler(nil, nil)
+                }
+            }
+            
+        }
+    }
 }
