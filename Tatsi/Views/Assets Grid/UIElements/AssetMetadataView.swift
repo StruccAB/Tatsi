@@ -36,7 +36,7 @@ final internal class AssetMetadataView: UIView {
                 return
             }
             self.timeLabel.isHidden = asset.duration <= 0 || !self.showDuration
-            self.timeLabel.text = self.string(from: asset.duration)
+            self.timeLabel.text = asset.duration.asString
             
             self.iconView.isHidden = !asset.isFavorite
             self.iconView.icon = .favorite
@@ -102,22 +102,4 @@ final internal class AssetMetadataView: UIView {
     override var intrinsicContentSize: CGSize {
         return CGSize(width: UIView.noIntrinsicMetric, height: 25)
     }
-    
-    private func string(from interval: TimeInterval) -> String? {
-        guard interval > 0 else {
-            return nil
-        }
-        let ti = NSInteger(interval)
-        
-        let seconds = ti % 60
-        let minutes = (ti / 60) % 60
-        let hours = (ti / 3600)
-        
-        if hours > 0 {
-            return String(format: "%0.2d:%0.2d:%0.2d", hours, minutes, seconds)
-        } else {
-            return String(format: "%0.2d:%0.2d", minutes, seconds)
-        }
-    }
-
 }

@@ -46,6 +46,7 @@
 		0CBB287E1F1389A800254034 /* TypeIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBB287D1F1389A800254034 /* TypeIcons.swift */; };
 		0CBB28801F138B4100254034 /* LocalizableStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBB287F1F138B4100254034 /* LocalizableStrings.swift */; };
 		50DE1942236327580031438D /* TatsiColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DE1941236327580031438D /* TatsiColors.swift */; };
+		AECF01732417BC53008A447A /* TimeIntervalExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECF01722417BC53008A447A /* TimeIntervalExtensions.swift */; };
 		C27656262402E316000F808D /* TatsiPickerViewControllerAuthDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27656252402E316000F808D /* TatsiPickerViewControllerAuthDelegate.swift */; };
 /* End PBXBuildFile section */
 
@@ -130,6 +131,7 @@
 		0CBB287D1F1389A800254034 /* TypeIcons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeIcons.swift; sourceTree = "<group>"; };
 		0CBB287F1F138B4100254034 /* LocalizableStrings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizableStrings.swift; sourceTree = "<group>"; };
 		50DE1941236327580031438D /* TatsiColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TatsiColors.swift; sourceTree = "<group>"; };
+		AECF01722417BC53008A447A /* TimeIntervalExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalExtensions.swift; sourceTree = "<group>"; };
 		C27656252402E316000F808D /* TatsiPickerViewControllerAuthDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TatsiPickerViewControllerAuthDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -234,6 +236,7 @@
 			children = (
 				0C5B61941F0E3E13005A25CE /* PHAssetCollectionExtensions.swift */,
 				0C5B61961F0E3EDD005A25CE /* CGSizeExtensions.swift */,
+				AECF01722417BC53008A447A /* TimeIntervalExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -533,6 +536,7 @@
 				0C5B61B31F0FC82D005A25CE /* AlbumsTableHeaderView.swift in Sources */,
 				0C5B617D1F0E32C0005A25CE /* TatsiConfig.swift in Sources */,
 				0C5B61911F0E39A3005A25CE /* AlbumsViewController.swift in Sources */,
+				AECF01732417BC53008A447A /* TimeIntervalExtensions.swift in Sources */,
 				0C5B617F1F0E3521005A25CE /* TatsiPickerViewControllerDelegate.swift in Sources */,
 				0C5B61851F0E3681005A25CE /* CameraCollectionViewCell.swift in Sources */,
 				0C5B61841F0E3681005A25CE /* AssetCollectionViewCell.swift in Sources */,
