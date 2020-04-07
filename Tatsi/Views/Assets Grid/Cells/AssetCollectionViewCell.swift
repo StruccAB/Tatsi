@@ -9,7 +9,8 @@
 import UIKit
 import Photos
 
-public var selectedImage: UIImage?
+public var selectedImage: UIImage!
+public var unselectedImage: UIImage!
 
 final internal class AssetCollectionViewCell: UICollectionViewCell {
     
@@ -56,20 +57,7 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
-    lazy private var selectedOverlay: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.isHidden = true
-        view.backgroundColor = UIColor.white.withAlphaComponent(0.5)
-        
-        let iconView = UIImageView(image: selectedImage!)
-        iconView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(iconView)
-        view.topAnchor.constraint(equalTo: iconView.topAnchor, constant: -5).isActive = true
-        view.trailingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 5).isActive = true
-        
-        return view
-    }()
+    lazy private var overlayView = OverlayView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -84,7 +72,7 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
     private func setupView() {
         self.contentView.addSubview(self.imageView)
         self.contentView.addSubview(self.metadataView)
-        self.contentView.addSubview(self.selectedOverlay)
+        self.contentView.addSubview(self.overlayView)
         
         self.accessibilityIdentifier = "tatsi.cell.asset"
         self.accessibilityTraits = UIAccessibilityTraits.image
@@ -100,10 +88,10 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
             self.contentView.bottomAnchor.constraint(equalTo: self.imageView.bottomAnchor),
             self.contentView.trailingAnchor.constraint(equalTo: self.imageView.trailingAnchor),
             
-            self.selectedOverlay.topAnchor.constraint(equalTo: self.contentView.topAnchor),
-            self.selectedOverlay.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-            self.contentView.bottomAnchor.constraint(equalTo: self.selectedOverlay.bottomAnchor),
-            self.contentView.trailingAnchor.constraint(equalTo: self.selectedOverlay.trailingAnchor),
+            self.overlayView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+            self.overlayView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            self.contentView.bottomAnchor.constraint(equalTo: self.overlayView.bottomAnchor),
+            self.contentView.trailingAnchor.constraint(equalTo: self.overlayView.trailingAnchor),
             
             self.metadataView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor),
             self.contentView.bottomAnchor.constraint(equalTo: self.metadataView.bottomAnchor),
@@ -175,7 +163,62 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
     
     override var isSelected: Bool {
         didSet {
-            self.selectedOverlay.isHidden = !self.isSelected
+            self.overlayView.setSelected(isSelected)
+        }
+    }
+}
+
+class OverlayView: UIView {
+    private let imageView: UIImageView = {
+        let imageView = UIImageView(image: selectedImage)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return imageView
+    }()
+    
+    private let selectedBackgroundView: UIView
+    
+    init() {
+        selectedBackgroundView = UIView()
+        selectedBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        
+        selectedBackgroundView.isHidden = true
+        selectedBackgroundView.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        
+        super.init(frame: .zero)
+        
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        addSubview(selectedBackgroundView)
+        selectedBackgroundView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        selectedBackgroundView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        selectedBackgroundView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        selectedBackgroundView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        
+        addSubview(imageView)
+        topAnchor.constraint(
+            equalTo: imageView.topAnchor,
+            constant: -5
+        ).isActive = true
+        trailingAnchor.constraint(
+            equalTo: imageView.trailingAnchor,
+            constant: 5
+        ).isActive = true
+    }
+    
+    @available(*, unavailable,
+      message: "Loading this view from a nib is unsupported in favor of initializer."
+    )
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setSelected(_ isSelected: Bool) {
+        selectedBackgroundView.isHidden = !isSelected
+        UIView.animate(withDuration: 0.1) { [unowned self] in
+            self.imageView.image = isSelected
+                ? selectedImage!
+                : unselectedImage
         }
     }
 }
