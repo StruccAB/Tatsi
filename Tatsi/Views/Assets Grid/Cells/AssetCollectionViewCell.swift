@@ -186,7 +186,7 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
 
 class OverlayView: UIView {
     private let imageView: UIImageView = {
-        let imageView = UIImageView(image: unselectedImage)
+        let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
         return imageView
@@ -232,6 +232,9 @@ class OverlayView: UIView {
     
     func setConfig(_ config: TatsiConfig?) {
         self.config = config
+        if config?.showUnselectedIndicator ?? false {
+            imageView.image = unselectedImage
+        }
     }
     
     func setSelected(_ isSelected: Bool) {
