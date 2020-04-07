@@ -9,8 +9,8 @@
 import UIKit
 import Photos
 
-let selectedImage: UIImage = #imageLiteral(resourceName: "SelectedShot")
-let unselectedImage: UIImage = #imageLiteral(resourceName: "UnselectedShot")
+public var selectedImage: UIImage!
+public var unselectedImage: UIImage?
 
 final internal class AssetCollectionViewCell: UICollectionViewCell {
     
