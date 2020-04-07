@@ -9,8 +9,8 @@
 import UIKit
 import Photos
 
-public var selectedImage: UIImage!
-public var unselectedImage: UIImage!
+let selectedImage: UIImage! = #imageLiteral(resourceName: "SelectedShot")
+let unselectedImage: UIImage! = #imageLiteral(resourceName: "UnselectedShot")
 
 final internal class AssetCollectionViewCell: UICollectionViewCell {
     
@@ -170,7 +170,7 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
 
 class OverlayView: UIView {
     private let imageView: UIImageView = {
-        let imageView = UIImageView(image: selectedImage)
+        let imageView = UIImageView(image: unselectedImage)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
         return imageView
