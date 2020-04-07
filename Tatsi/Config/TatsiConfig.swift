@@ -13,6 +13,7 @@ import Photos
 public struct TatsiConfig {
     
     // MARK: - Public properties
+    public var showUnselectedIndicator: Bool = true
     
     /// The default configuration of the picker
     public static let `default`: TatsiConfig = {

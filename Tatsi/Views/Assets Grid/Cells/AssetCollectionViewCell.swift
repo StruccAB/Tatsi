@@ -9,8 +9,8 @@
 import UIKit
 import Photos
 
-let selectedImage: UIImage! = #imageLiteral(resourceName: "SelectedShot")
-let unselectedImage: UIImage! = #imageLiteral(resourceName: "UnselectedShot")
+let selectedImage: UIImage = #imageLiteral(resourceName: "SelectedShot")
+let unselectedImage: UIImage = #imageLiteral(resourceName: "UnselectedShot")
 
 final internal class AssetCollectionViewCell: UICollectionViewCell {
     
@@ -40,6 +40,14 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    var config: TatsiConfig? {
+        didSet {
+            if oldValue == nil {
+                addOverlayView()
+            }
+        }
+    }
+    
     private var currentRequest: PHImageRequestID?
     
     fileprivate var shouldUpdateImage = false
@@ -57,7 +65,7 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
-    lazy private var overlayView = OverlayView()
+    private var overlayView: OverlayView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -72,7 +80,6 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
     private func setupView() {
         self.contentView.addSubview(self.imageView)
         self.contentView.addSubview(self.metadataView)
-        self.contentView.addSubview(self.overlayView)
         
         self.accessibilityIdentifier = "tatsi.cell.asset"
         self.accessibilityTraits = UIAccessibilityTraits.image
@@ -87,11 +94,6 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
             self.imageView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
             self.contentView.bottomAnchor.constraint(equalTo: self.imageView.bottomAnchor),
             self.contentView.trailingAnchor.constraint(equalTo: self.imageView.trailingAnchor),
-            
-            self.overlayView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
-            self.overlayView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-            self.contentView.bottomAnchor.constraint(equalTo: self.overlayView.bottomAnchor),
-            self.contentView.trailingAnchor.constraint(equalTo: self.overlayView.trailingAnchor),
             
             self.metadataView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor),
             self.contentView.bottomAnchor.constraint(equalTo: self.metadataView.bottomAnchor),
@@ -163,8 +165,20 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
     
     override var isSelected: Bool {
         didSet {
-            self.overlayView.setSelected(isSelected)
+            overlayView.setSelected(isSelected)
         }
+    }
+    
+    private func addOverlayView() {
+        overlayView = OverlayView(config: config)
+        overlayView.translatesAutoresizingMaskIntoConstraints = false
+        
+        contentView.addSubview(overlayView)
+        
+        overlayView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        overlayView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
+        overlayView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        overlayView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
     }
 }
 
@@ -177,8 +191,11 @@ class OverlayView: UIView {
     }()
     
     private let selectedBackgroundView: UIView
+    private let config: TatsiConfig?
     
-    init() {
+    init(config: TatsiConfig?) {
+        self.config = config
+        
         selectedBackgroundView = UIView()
         selectedBackgroundView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -215,10 +232,12 @@ class OverlayView: UIView {
     
     func setSelected(_ isSelected: Bool) {
         selectedBackgroundView.isHidden = !isSelected
-        UIView.animate(withDuration: 0.1) { [unowned self] in
-            self.imageView.image = isSelected
-                ? selectedImage!
-                : unselectedImage
-        }
+        imageView.image = isSelected
+            ? selectedImage
+            : (
+                (config?.showUnselectedIndicator ?? false)
+                    ? unselectedImage
+                    : nil
+            )
     }
 }
