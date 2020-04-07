@@ -43,7 +43,7 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
     var config: TatsiConfig? {
         didSet {
             if oldValue == nil {
-                addOverlayView()
+                overlayView.setConfig(config)
             }
         }
     }
@@ -86,6 +86,8 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
         self.isAccessibilityElement = true
         
         self.setupConstraints()
+        
+        addOverlayView()
     }
     
     private func setupConstraints() {
@@ -170,7 +172,7 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
     }
     
     private func addOverlayView() {
-        overlayView = OverlayView(config: config)
+        overlayView = OverlayView()
         overlayView.translatesAutoresizingMaskIntoConstraints = false
         
         contentView.addSubview(overlayView)
@@ -191,11 +193,9 @@ class OverlayView: UIView {
     }()
     
     private let selectedBackgroundView: UIView
-    private let config: TatsiConfig?
+    private var config: TatsiConfig?
     
-    init(config: TatsiConfig?) {
-        self.config = config
-        
+    init() {
         selectedBackgroundView = UIView()
         selectedBackgroundView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -228,6 +228,10 @@ class OverlayView: UIView {
     )
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setConfig(_ config: TatsiConfig?) {
+        self.config = config
     }
     
     func setSelected(_ isSelected: Bool) {
