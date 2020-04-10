@@ -9,9 +9,11 @@
 import Foundation
 
 public extension TimeInterval {
-    var asString: String? {
+    var asString: String {
+        let defaultResult = "0:00"
+        
         guard self > 0 else {
-            return nil
+            return defaultResult
         }
         let ti = NSInteger(self)
         
