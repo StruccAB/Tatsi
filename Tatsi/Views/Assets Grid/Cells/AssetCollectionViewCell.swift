@@ -229,19 +229,19 @@ class OverlayView: UIView {
     
     func setConfig(_ config: TatsiConfig?) {
         self.config = config
-        if config?.showUnselectedIndicator ?? false {
+        if config?.showSelectionIndicators ?? false {
             imageView.image = config?.unselectedImage
         }
     }
     
     func setSelected(_ isSelected: Bool) {
         selectedBackgroundView.isHidden = !isSelected
-        imageView.image = isSelected
-            ? config?.selectedImage
-            : (
-                (config?.showUnselectedIndicator ?? false)
-                    ? config?.unselectedImage
-                    : nil
+        imageView.image = (config?.showSelectionIndicators ?? false)
+            ? (
+                isSelected
+                    ? config?.selectedImage
+                    : config?.unselectedImage
             )
+            : nil
     }
 }
