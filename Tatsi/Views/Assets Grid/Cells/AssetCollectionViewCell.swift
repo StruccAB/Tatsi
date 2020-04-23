@@ -62,7 +62,7 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
-    private var overlayView: OverlayView!
+    internal var overlayView: OverlayView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -167,8 +167,19 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
             overlayView.setSelected(isSelected)
         }
     }
+}
+
+extension AssetCollectionViewCell: OverlayViewContaining {
+}
+
+public protocol OverlayViewContaining: class {
+    var overlayView: OverlayView! { get set }
     
-    private func addOverlayView() {
+    func addOverlayView()
+}
+
+public extension OverlayViewContaining where Self: UICollectionViewCell {
+    func addOverlayView() {
         overlayView = OverlayView()
         overlayView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -181,7 +192,7 @@ final internal class AssetCollectionViewCell: UICollectionViewCell {
     }
 }
 
-class OverlayView: UIView {
+public class OverlayView: UIView {
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -227,14 +238,14 @@ class OverlayView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setConfig(_ config: TatsiConfig?) {
+    public func setConfig(_ config: TatsiConfig?) {
         self.config = config
         if config?.showSelectionIndicators ?? false {
             imageView.image = config?.unselectedImage
         }
     }
     
-    func setSelected(_ isSelected: Bool) {
+    public func setSelected(_ isSelected: Bool) {
         selectedBackgroundView.isHidden = !isSelected
         imageView.image = (config?.showSelectionIndicators ?? false)
             ? (
