@@ -32,6 +32,9 @@ public struct TatsiConfig {
         /// A view that shows the photos of a specific album.
         case album(PHAssetCollection)
     }
+    
+    public var selectedImage: UIImage = UIImage()
+    public var unselectedImage: UIImage = UIImage()
 
     /// The colors to apply to the interface elements.
     public var colors: TatsiColors = TatsiDefaultColors()

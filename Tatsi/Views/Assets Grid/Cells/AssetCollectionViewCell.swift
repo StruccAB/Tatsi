@@ -9,9 +9,6 @@
 import UIKit
 import Photos
 
-public var selectedImage: UIImage!
-public var unselectedImage: UIImage?
-
 final internal class AssetCollectionViewCell: UICollectionViewCell {
     
     static var reuseIdentifier: String {
@@ -233,17 +230,17 @@ class OverlayView: UIView {
     func setConfig(_ config: TatsiConfig?) {
         self.config = config
         if config?.showUnselectedIndicator ?? false {
-            imageView.image = unselectedImage
+            imageView.image = config?.unselectedImage
         }
     }
     
     func setSelected(_ isSelected: Bool) {
         selectedBackgroundView.isHidden = !isSelected
         imageView.image = isSelected
-            ? selectedImage
+            ? config?.selectedImage
             : (
                 (config?.showUnselectedIndicator ?? false)
-                    ? unselectedImage
+                    ? config?.unselectedImage
                     : nil
             )
     }
