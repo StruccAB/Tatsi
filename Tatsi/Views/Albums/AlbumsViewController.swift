@@ -78,7 +78,6 @@ final internal class AlbumsViewController: UITableViewController, PickerViewCont
         cancelButtonItem.action = #selector(cancel(_:))
         cancelButtonItem.accessibilityIdentifier = "tatsi.button.cancel"
         cancelButtonItem.tintColor = TatsiConfig.default.colors.link
-        self.navigationItem.rightBarButtonItem = cancelButtonItem
         
         let backButtonItem = UIBarButtonItem(title: LocalizableStrings.albumsViewBackButton, style: .plain, target: nil, action: nil)
         backButtonItem.accessibilityIdentifier = "tatsi.button.albums"

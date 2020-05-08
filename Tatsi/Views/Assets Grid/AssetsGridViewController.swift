@@ -34,7 +34,7 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
     }
     
     var showingAlbums: Bool {
-        guard self.config?.singleViewMode == true, let titleView = self.navigationItem.titleView as? AlbumTitleView else {
+        guard self.config?.singleViewMode == true, let titleView = self.navigationItem.leftBarButtonItem?.customView as? AlbumTitleView else {
             return false
         }
         return titleView.flipArrow
@@ -136,8 +136,6 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
         
         self.collectionView?.allowsMultipleSelection = true
         
-        self.navigationItem.rightBarButtonItem = self.doneButton
-        
         NotificationCenter.default.addObserver(self, selector: #selector(AssetsGridViewController.applicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
 
         if #available(iOS 13.0, *) {
@@ -155,8 +153,6 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
         cancelButtonItem.action = #selector(cancel(_:))
         cancelButtonItem.tintColor = TatsiConfig.default.colors.link
         cancelButtonItem.accessibilityIdentifier = "tatsi.button.cancel"
-        
-        self.navigationItem.leftBarButtonItem = isRootModalViewController ? cancelButtonItem : nil
         
         collectionView.backgroundColor = .black
     }
@@ -192,7 +188,7 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
     }
     
     @objc fileprivate func changeAlbum(_ sender: AnyObject?) {
-        guard let titleView = self.navigationItem.titleView as? AlbumTitleView, !self.animatingAlbumView else {
+        guard let titleView = self.navigationItem.leftBarButtonItem?.customView as? AlbumTitleView, !self.animatingAlbumView else {
             return
         }
         let animator = UIViewPropertyAnimator(duration: 0.32, curve: .easeInOut) {
@@ -235,7 +231,6 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
         albumsViewController.didMove(toParent: self)
         
         animator.addAnimations {
-            self.navigationItem.leftBarButtonItem?.isEnabled = false
             self.navigationItem.rightBarButtonItem?.isEnabled = false
             albumsViewController.view.frame = self.view.bounds
         }
@@ -246,7 +241,6 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
             return
         }
         animator.addAnimations {
-            self.navigationItem.leftBarButtonItem?.isEnabled = true
             self.reloadDoneButtonState()
             
             var frame = self.view.bounds
@@ -270,8 +264,9 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
             let titleView = AlbumTitleView()
             titleView.title = self.album.localizedTitle?.uppercased()
             titleView.frame = CGRect(x: 0, y: 0, width: 200, height: 44)
+            let leftBarButton = UIBarButtonItem(customView: titleView)
             titleView.addTarget(self, action: #selector(changeAlbum(_:)), for: .touchUpInside)
-            self.navigationItem.titleView = titleView
+            self.navigationItem.setLeftBarButton(leftBarButton, animated: false)
         }
     }
     
@@ -509,7 +504,7 @@ extension AssetsGridViewController {
 extension AssetsGridViewController: AlbumsViewControllerDelegate {
     
     func albumsViewController(_ albumsViewController: AlbumsViewController, didSelectAlbum album: PHAssetCollection) {
-        let titleView = self.navigationItem.titleView as? AlbumTitleView
+        let titleView = self.navigationItem.leftBarButtonItem?.customView as? AlbumTitleView
         
         self.album = album
         let animator = UIViewPropertyAnimator(duration: 0.32, curve: .easeInOut) {

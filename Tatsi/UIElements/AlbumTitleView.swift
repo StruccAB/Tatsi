@@ -13,6 +13,11 @@ public func set(_ im: UIImage) {
     image = im
 }
 
+var font: UIFont!
+public func set(_ f: UIFont) {
+    font = f
+}
+
 /// The title view that is used in the case that "singleViewMode" is enabled. This title view will display the title of the Album, but also act as a control.
 final class AlbumTitleView: UIControl {
 
@@ -43,6 +48,7 @@ final class AlbumTitleView: UIControl {
         label.isUserInteractionEnabled = false
         label.isAccessibilityElement = false
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = font
         return label
     }()
     
@@ -88,13 +94,12 @@ final class AlbumTitleView: UIControl {
         
         var titleLabelSize = self.titleLabel.intrinsicContentSize
         titleLabelSize.width = min(titleLabelSize.width, bounds.width)
-        var titleLabelOrigin = CGPoint()
+        var titleLabelOrigin = CGPoint.zero
         
         var arrowIconViewSize = self.arrowIconView.intrinsicContentSize
         arrowIconViewSize.width = min(arrowIconViewSize.width, bounds.width)
         var arrowIconViewOrigin = CGPoint()
         
-        titleLabelOrigin.x = (self.bounds.width - (titleLabelSize.width + arrowIconViewSize.width + arrowIconOffset.x)) / 2
         arrowIconViewOrigin.x = titleLabelOrigin.x + titleLabelSize.width + arrowIconOffset.x
         titleLabelOrigin.y = (self.bounds.height - titleLabelSize.height) / 2
         arrowIconViewOrigin.y = titleLabelOrigin.y + ((titleLabelSize.height - arrowIconViewSize.height) / 2) + arrowIconOffset.y
