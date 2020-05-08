@@ -41,23 +41,18 @@ final class AlbumTitleView: UIControl {
         return label
     }()
     
-    lazy fileprivate var arrowIconView: ChangeAlbumArrowView = {
-        let imageView = ChangeAlbumArrowView()
+    lazy fileprivate var arrowIconView: UIView = {
+        let imageView = UIImageView(
+            frame: CGRect(
+                origin: .zero,
+                size: CGSize(width: 5, height: 5)
+            )
+        )
+        imageView.backgroundColor = .red
         imageView.isUserInteractionEnabled = false
         imageView.isAccessibilityElement = false
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
-    }()
-    
-   lazy fileprivate var directionLabel: UILabel = {
-        let label = UILabel()
-        label.text = NSLocalizedString("tasti.button.change-album", tableName: nil, bundle: Bundle.main, value: "Tap here to change", comment: "The label that is shown below the album's name to direct the user to tap the title to change the album")
-        label.textColor = TatsiConfig.default.colors.secondaryLabel
-        label.font = UIFont.systemFont(ofSize: 10)
-        label.isUserInteractionEnabled = false
-        label.isAccessibilityElement = false
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
     }()
     
     override init(frame: CGRect) {
@@ -73,7 +68,6 @@ final class AlbumTitleView: UIControl {
     private func setupView() {
         self.addSubview(self.titleLabel)
         self.addSubview(self.arrowIconView)
-        self.addSubview(self.directionLabel)
         
         self.isAccessibilityElement = true
         self.accessibilityTraits = UIAccessibilityTraits.button

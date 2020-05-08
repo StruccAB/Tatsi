@@ -268,7 +268,7 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
         
         if self.config?.singleViewMode ?? false {
             let titleView = AlbumTitleView()
-            titleView.title = self.album.localizedTitle
+            titleView.title = self.album.localizedTitle?.uppercased()
             titleView.frame = CGRect(x: 0, y: 0, width: 200, height: 44)
             titleView.addTarget(self, action: #selector(changeAlbum(_:)), for: .touchUpInside)
             self.navigationItem.titleView = titleView
@@ -381,7 +381,7 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
         if !self.selectedAssets.contains(asset) {
             self.selectedAssets.append(asset)
         }
-        if let index = self.assets?.index(of: asset) {
+        if let index = self.assets?.firstIndex(of: asset) {
             let additionalIndex = self.config?.invertUserLibraryOrder == true && self.showCameraButton ? 1 : 0
             self.collectionView.selectItem(at: IndexPath(item: index + additionalIndex, section: 0), animated: false, scrollPosition: UICollectionView.ScrollPosition())
         }
