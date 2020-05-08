@@ -8,6 +8,11 @@
 
 import UIKit
 
+var image: UIImage!
+public func set(_ im: UIImage) {
+    image = im
+}
+
 /// The title view that is used in the case that "singleViewMode" is enabled. This title view will display the title of the Album, but also act as a control.
 final class AlbumTitleView: UIControl {
 
@@ -48,7 +53,7 @@ final class AlbumTitleView: UIControl {
                 size: CGSize(width: 5, height: 5)
             )
         )
-        imageView.backgroundColor = .red
+        imageView.image = image
         imageView.isUserInteractionEnabled = false
         imageView.isAccessibilityElement = false
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -79,7 +84,7 @@ final class AlbumTitleView: UIControl {
 
         // Note: Because this is a view that is placed inside a UINavigationBar auto layout can't be used. It can only be used when the target is iOS 11 or higher.
         
-        let arrowIconOffset = CGPoint(x: 3, y: 2)
+        let arrowIconOffset = CGPoint(x: 11, y: 0)
         
         var titleLabelSize = self.titleLabel.intrinsicContentSize
         titleLabelSize.width = min(titleLabelSize.width, bounds.width)
@@ -89,21 +94,13 @@ final class AlbumTitleView: UIControl {
         arrowIconViewSize.width = min(arrowIconViewSize.width, bounds.width)
         var arrowIconViewOrigin = CGPoint()
         
-        var directionLabelSize = self.directionLabel.intrinsicContentSize
-        directionLabelSize.width = min(directionLabelSize.width, bounds.width)
-        var directionLabelOrigin = CGPoint()
-        
         titleLabelOrigin.x = (self.bounds.width - (titleLabelSize.width + arrowIconViewSize.width + arrowIconOffset.x)) / 2
         arrowIconViewOrigin.x = titleLabelOrigin.x + titleLabelSize.width + arrowIconOffset.x
-        directionLabelOrigin.x = (self.bounds.width - directionLabelSize.width) / 2
-        
-        titleLabelOrigin.y = (self.bounds.height - (titleLabelSize.height + directionLabelSize.height)) / 2
+        titleLabelOrigin.y = (self.bounds.height - titleLabelSize.height) / 2
         arrowIconViewOrigin.y = titleLabelOrigin.y + ((titleLabelSize.height - arrowIconViewSize.height) / 2) + arrowIconOffset.y
-        directionLabelOrigin.y = titleLabelOrigin.y + titleLabelSize.height
         
         self.titleLabel.frame = CGRect(origin: titleLabelOrigin, size: titleLabelSize)
         self.arrowIconView.frame = CGRect(origin: arrowIconViewOrigin, size: arrowIconViewSize)
-        self.directionLabel.frame = CGRect(origin: directionLabelOrigin, size: directionLabelSize)
     }
     
 }

@@ -11,7 +11,9 @@ import Tatsi
 import Photos
 
 final class ViewController: UIViewController {
-    
+    override func viewDidLoad() {
+        Tatsi.set(#imageLiteral(resourceName: "im"))
+    }
     @IBAction private func showUIKitPicker(_ sender: Any) {
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
