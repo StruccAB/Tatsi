@@ -20,6 +20,8 @@ public protocol TatsiPickerViewControllerDelegate: class {
     ///   - assets: The assets the user has selected, in the order the user has selected them.
     func pickerViewController(_ pickerViewController: TatsiPickerViewController, didPickAssets assets: [PHAsset])
     
+    func pickerViewController(_ pickerViewController: TatsiPickerViewController, didSelectAssets assets: [PHAsset])
+    
     /// Called when the user tapps the cancel button on the PickerViewController. By default this will dismiss the picker, but a custom implementation has to dismiss the picker.
     ///
     /// - Parameter pickerViewController: The PickerViewController that was used..=

@@ -70,6 +70,9 @@ extension ViewController: TatsiPickerViewControllerDelegate {
         print("Assets \(assets)")
     }
     
+    func pickerViewController(_ pickerViewController: TatsiPickerViewController, didSelectAssets assets: [PHAsset]) {
+        print(assets)
+    }
 }
 
 extension ViewController: TatsiAuthPickerViewControllerDelegate {
