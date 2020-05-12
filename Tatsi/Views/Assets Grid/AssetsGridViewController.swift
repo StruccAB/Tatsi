@@ -10,6 +10,12 @@ import UIKit
 import Photos
 import MobileCoreServices
 
+public func inject(_ collection: PHAssetCollection) {
+    _handleAlbum?(collection)
+}
+
+var _handleAlbum: ((PHAssetCollection) -> Void)?
+
 final internal class AssetsGridViewController: UICollectionViewController, PickerViewController {
     
     // MARK: - Internal Properties
@@ -114,6 +120,12 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
     init(album: PHAssetCollection) {
         self.album = album
         super.init(collectionViewLayout: UICollectionViewFlowLayout())
+        
+        _handleAlbum = self.handleAlbum
+    }
+        
+    private func handleAlbum(_ album: PHAssetCollection) {
+        self.album = album
     }
     
     required init?(coder aDecoder: NSCoder) {
