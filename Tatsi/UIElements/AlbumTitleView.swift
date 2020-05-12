@@ -8,16 +8,6 @@
 
 import UIKit
 
-var image: UIImage!
-public func set(_ im: UIImage) {
-    image = im
-}
-
-var font: UIFont!
-public func set(_ f: UIFont) {
-    font = f
-}
-
 /// The title view that is used in the case that "singleViewMode" is enabled. This title view will display the title of the Album, but also act as a control.
 final class AlbumTitleView: UIControl {
 
@@ -48,7 +38,7 @@ final class AlbumTitleView: UIControl {
         label.isUserInteractionEnabled = false
         label.isAccessibilityElement = false
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = font
+        label.font = albumFont
         return label
     }()
     
@@ -59,7 +49,7 @@ final class AlbumTitleView: UIControl {
                 size: CGSize(width: 5, height: 5)
             )
         )
-        imageView.image = image
+        imageView.image = albumDropdownImage
         imageView.isUserInteractionEnabled = false
         imageView.isAccessibilityElement = false
         imageView.translatesAutoresizingMaskIntoConstraints = false

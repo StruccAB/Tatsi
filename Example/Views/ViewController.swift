@@ -12,8 +12,8 @@ import Photos
 
 final class ViewController: UIViewController {
     override func viewDidLoad() {
-        Tatsi.set(#imageLiteral(resourceName: "im"))
-        Tatsi.set(UIFont.boldSystemFont(ofSize: 13))
+        Tatsi.setAlbumDropdownImage(#imageLiteral(resourceName: "im"))
+        Tatsi.setAlbumFont(UIFont.boldSystemFont(ofSize: 13))
     }
     @IBAction private func showUIKitPicker(_ sender: Any) {
         let imagePickerController = UIImagePickerController()

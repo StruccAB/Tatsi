@@ -9,6 +9,16 @@
 import Foundation
 import Photos
 
+var albumDropdownImage: UIImage!
+public func setAlbumDropdownImage(_ image: UIImage) {
+    albumDropdownImage = image
+}
+
+var albumFont: UIFont!
+public func setAlbumFont(_ font: UIFont) {
+    albumFont = font
+}
+
 /// A struct that defines all the customizable properties on a picker
 public struct TatsiConfig {
     
