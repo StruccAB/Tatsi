@@ -43,7 +43,6 @@ public protocol TatsiPickerViewControllerDelegate: class {
 }
 
 extension TatsiPickerViewControllerDelegate {
-    
     public func pickerViewControllerDidCancel(_ pickerViewController: TatsiPickerViewController) {
         pickerViewController.dismiss(animated: true, completion: nil)
     }
@@ -56,4 +55,6 @@ extension TatsiPickerViewControllerDelegate {
         return nil
     }
     
+    public func pickerViewController(_ pickerViewController: TatsiPickerViewController, didSelectAssets assets: [PHAsset]) {
+    }
 }

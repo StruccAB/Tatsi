@@ -36,6 +36,10 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
     internal fileprivate(set) var selectedAssets = [PHAsset]() {
         didSet {
             self.reloadDoneButtonState()
+            
+            if let pickerViewController = pickerViewController {
+                delegate?.pickerViewController(pickerViewController, didSelectAssets: selectedAssets)
+            }
         }
     }
     
@@ -472,10 +476,6 @@ extension AssetsGridViewController {
                     self.finishPicking(with: self.selectedAssets)
                 }
             }
-            
-            if let pickerViewController = pickerViewController {
-                delegate?.pickerViewController(pickerViewController, didSelectAssets: selectedAssets)
-            }
         } else {
             let cameraController = UIImagePickerController()
             cameraController.sourceType = UIImagePickerController.SourceType.camera
@@ -501,10 +501,6 @@ extension AssetsGridViewController {
         
         if self.config?.returnAfterEachSelection ?? false {
             self.finishPicking(with: self.selectedAssets)
-        }
-        
-        if let pickerViewController = pickerViewController {
-            delegate?.pickerViewController(pickerViewController, didSelectAssets: selectedAssets)
         }
     }
 }
