@@ -271,7 +271,6 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
     }
     
     fileprivate func configureForNewAlbum() {
-        self.title = self.album.localizedTitle
         self.startFetchingAssets()
         
         self.reloadDoneButtonState()
