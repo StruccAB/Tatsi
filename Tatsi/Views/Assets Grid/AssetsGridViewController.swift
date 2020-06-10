@@ -98,6 +98,8 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
                         self.selectAsset(selectedAsset)
                     }
                     self.emptyView = collectionView.numberOfItems(inSection: 0) <= 0  ? AlbumEmptyView() : nil
+                    
+                    self.scrollToEnd()
                 })
                 
             }
