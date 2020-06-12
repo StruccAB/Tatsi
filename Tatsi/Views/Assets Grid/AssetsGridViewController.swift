@@ -312,7 +312,7 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
                 allAssets.append(asset)
             })
             DispatchQueue.main.async {
-                if self?.config?.invertUserLibraryOrder == true && strongSelf.album.isUserLibrary {
+                if self?.config?.invertUserLibraryOrder == true {
                     allAssets.reverse()
                 }
                 self?.assets = allAssets
@@ -408,7 +408,7 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
         guard section >= 0, item >= 0 else {
             return
         }
-        let lastIndexPath = IndexPath(item: item, section: section)
+        let lastIndexPath = IndexPath(item: 0, section: 0)
         collectionView.scrollToItem(at: lastIndexPath, at: .bottom, animated: false)
     }
     
