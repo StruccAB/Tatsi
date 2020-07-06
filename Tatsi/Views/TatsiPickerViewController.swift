@@ -81,3 +81,13 @@ final public class TatsiPickerViewController: UINavigationController {
     }
 
 }
+
+extension TatsiPickerViewController {
+
+    public func selectMyAssets(assets: [PHAsset]) {
+        guard let assetGridController = viewControllers.compactMap { $0 as? AssetsGridViewController }.first,
+            !assets.isEmpty else { return }
+
+        assets.forEach(assetGridController.selectAsset)
+    }
+}
