@@ -389,7 +389,7 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
         }
     }
     
-    fileprivate func selectAsset(_ asset: PHAsset) {
+    func selectAsset(_ asset: PHAsset) {
         if !self.selectedAssets.contains(asset) {
             self.selectedAssets.append(asset)
         }
