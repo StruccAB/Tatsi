@@ -25,12 +25,35 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
             guard self.album != oldValue else {
                 return
             }
-            self.selectedAssets = []
-            self.assets = []
-            self.collectionView?.reloadData()
-            
-            self.configureForNewAlbum()
+            reloadAlbumData()
+            hideAlbums()
         }
+    }
+    
+    internal func reloadData() {
+        reloadAlbumData()
+        hideAlbums()
+    }
+    
+    func reloadAlbumData() {
+        selectedAssets = []
+        assets = []
+        collectionView?.reloadData()
+        
+        configureForNewAlbum()
+    }
+    
+    func hideAlbums() {
+        let titleView = self.navigationItem.leftBarButtonItem?.customView as? AlbumTitleView
+        let animator = UIViewPropertyAnimator(duration: 0.32, curve: .easeInOut) {
+            titleView?.flipArrow = false
+        }
+        self.hideAlbumsViews(animator: animator)
+        animator.addCompletion { (_) in
+            self.animatingAlbumView = false
+        }
+        self.animatingAlbumView = true
+        animator.startAnimation()
     }
     
     internal fileprivate(set) var selectedAssets = [PHAsset]() {
@@ -521,18 +544,7 @@ extension AssetsGridViewController {
 extension AssetsGridViewController: AlbumsViewControllerDelegate {
     
     func albumsViewController(_ albumsViewController: AlbumsViewController, didSelectAlbum album: PHAssetCollection) {
-        let titleView = self.navigationItem.leftBarButtonItem?.customView as? AlbumTitleView
-        
         self.album = album
-        let animator = UIViewPropertyAnimator(duration: 0.32, curve: .easeInOut) {
-            titleView?.flipArrow = false
-        }
-        self.hideAlbumsViews(animator: animator)
-        animator.addCompletion { (_) in
-            self.animatingAlbumView = false
-        }
-        self.animatingAlbumView = true
-        animator.startAnimation()
     }
     
 }

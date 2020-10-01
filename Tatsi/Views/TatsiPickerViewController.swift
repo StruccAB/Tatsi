@@ -90,4 +90,11 @@ extension TatsiPickerViewController {
 
         assets.forEach(assetGridController.selectAsset)
     }
+    
+    public func reloadData() {
+        guard let assetGridController = viewControllers.compactMap { $0 as? AssetsGridViewController }.first else {
+            return
+        }
+        assetGridController.reloadData()
+    }
 }
