@@ -319,7 +319,7 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
     // MARK: - Fetching
     
     fileprivate func startFetchingAssets() {
-        guard let fetchOptions = self.config?.assetFetchOptions() else {
+        guard let config = self.config, let fetchOptions = config.assetFetchOptions() else {
             return
         }
         if !self.showCameraButton {
@@ -332,7 +332,9 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
             let result = PHAsset.fetchAssets(in: strongSelf.album, options: fetchOptions)
             var allAssets = [PHAsset]()
             result.enumerateObjects({ (asset, _, _) in
-                allAssets.append(asset)
+                if config.supportedMediaTypes.contains(asset.mediaType) {
+                    allAssets.append(asset)
+                }
             })
             DispatchQueue.main.async {
                 if self?.config?.invertUserLibraryOrder == true {
