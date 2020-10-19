@@ -97,4 +97,11 @@ extension TatsiPickerViewController {
         }
         assetGridController.reloadData()
     }
+    
+    public func hideAlbums() {
+        guard let assetGridController = viewControllers.compactMap { $0 as? AssetsGridViewController }.first else {
+            return
+        }
+        assetGridController.hideAlbums()
+    }
 }

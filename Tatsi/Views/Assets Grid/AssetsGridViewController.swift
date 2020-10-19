@@ -20,7 +20,7 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
     
     // MARK: - Internal Properties
     
-    internal var album: PHAssetCollection {
+    var album: PHAssetCollection {
         didSet {
             guard self.album != oldValue else {
                 return
@@ -30,7 +30,7 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
         }
     }
     
-    internal func reloadData() {
+    func reloadData() {
         reloadAlbumData()
         hideAlbums()
     }
