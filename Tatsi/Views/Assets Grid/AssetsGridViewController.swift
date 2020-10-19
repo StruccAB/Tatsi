@@ -36,7 +36,6 @@ final internal class AssetsGridViewController: UICollectionViewController, Picke
     }
     
     func reloadAlbumData() {
-        selectedAssets = []
         assets = []
         collectionView?.reloadData()
         
