@@ -96,7 +96,7 @@ final internal class AlbumsViewController: UITableViewController, PickerViewCont
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .black
+        view.backgroundColor = config?.colors.background
         
         self.tableView.register(AlbumTableViewCell.self, forCellReuseIdentifier: AlbumTableViewCell.reuseIdentifier)
         self.tableView.register(AlbumsTableHeaderView.self, forHeaderFooterViewReuseIdentifier: AlbumsTableHeaderView.reuseIdentifier)
@@ -269,6 +269,7 @@ extension AlbumsViewController {
             fatalError("AlbumsTableHeaderView probably not registered")
         }
         headerView.title = category.headerTitle
+        headerView.backgroundColor = config?.colors.background
         return headerView
     }
     
