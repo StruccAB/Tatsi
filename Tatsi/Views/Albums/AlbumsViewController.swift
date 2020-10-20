@@ -269,7 +269,7 @@ extension AlbumsViewController {
             fatalError("AlbumsTableHeaderView probably not registered")
         }
         headerView.title = category.headerTitle
-        headerView.backgroundColor = config?.colors.background
+        headerView.contentView.backgroundColor = config?.colors.background
         return headerView
     }
     
