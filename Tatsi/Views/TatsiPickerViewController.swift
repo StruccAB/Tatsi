@@ -28,6 +28,12 @@ final public class TatsiPickerViewController: UINavigationController {
         navigationBar.isTranslucent = false
 
         self.setIntialViewController()
+        
+        PHPhotoLibrary.shared().register(self)
+    }
+    
+    deinit {
+        PHPhotoLibrary.shared().unregisterChangeObserver(self)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -37,8 +43,15 @@ final public class TatsiPickerViewController: UINavigationController {
     // MARK: - Helpers
     
     internal func setIntialViewController() {
-        switch PHPhotoLibrary.authorizationStatus() {
-        case .authorized:
+        var authorizationStatus: PHAuthorizationStatus
+        if #available(iOS 14, *) {
+            authorizationStatus = PHPhotoLibrary.authorizationStatus(for: .readWrite)
+        } else {
+            authorizationStatus = PHPhotoLibrary.authorizationStatus()
+        }
+        
+        switch authorizationStatus {
+        case .authorized, .limited:
             //Authorized, show the album view or the album detail view.
             var album: PHAssetCollection?
             let userLibrary = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .smartAlbumUserLibrary, options: nil).firstObject
@@ -55,7 +68,6 @@ final public class TatsiPickerViewController: UINavigationController {
             } else {
                 self.showAlbumViewController(with: album)
             }
-            
         case .denied, .notDetermined, .restricted:
             // Not authorized, show the view to give access
             self.viewControllers = [AuthorizationViewController()]
@@ -85,23 +97,31 @@ final public class TatsiPickerViewController: UINavigationController {
 extension TatsiPickerViewController {
 
     public func selectMyAssets(assets: [PHAsset]) {
-        guard let assetGridController = viewControllers.compactMap { $0 as? AssetsGridViewController }.first,
+        guard let assetGridController = viewControllers.compactMap({ $0 as? AssetsGridViewController }).first,
             !assets.isEmpty else { return }
 
         assets.forEach(assetGridController.selectAsset)
     }
     
     public func reloadData() {
-        guard let assetGridController = viewControllers.compactMap { $0 as? AssetsGridViewController }.first else {
+        guard let assetGridController = viewControllers.compactMap({ $0 as? AssetsGridViewController }).first else {
             return
         }
         assetGridController.reloadData()
     }
     
     public func hideAlbums() {
-        guard let assetGridController = viewControllers.compactMap { $0 as? AssetsGridViewController }.first else {
+        guard let assetGridController = viewControllers.compactMap({ $0 as? AssetsGridViewController }).first else {
             return
         }
         assetGridController.hideAlbums()
+    }
+}
+
+extension TatsiPickerViewController: PHPhotoLibraryChangeObserver {
+    public func photoLibraryDidChange(_ changeInstance: PHChange) {
+        DispatchQueue.main.async {
+            self.reloadData()
+        }
     }
 }
