@@ -9,5 +9,5 @@
 import Foundation
 
 public protocol TatsiAuthPickerViewControllerDelegate: class {
-    func didRequestAuthorization(success: Bool)
+    func didRequestAuthorization(success: Bool, isLimited: Bool)
 }

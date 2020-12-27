@@ -76,7 +76,8 @@ extension ViewController: TatsiPickerViewControllerDelegate {
 }
 
 extension ViewController: TatsiAuthPickerViewControllerDelegate {
-    func didRequestAuthorization(success: Bool) {
+    func didRequestAuthorization(success: Bool, isLimited: Bool) {
         print(success)
+        print(isLimited)
     }
 }

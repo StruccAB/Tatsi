@@ -79,13 +79,29 @@ final internal class AuthorizationViewController: UIViewController, PickerViewCo
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        PHPhotoLibrary.requestAuthorization { [weak self] (status) in
-            DispatchQueue.main.async {
-                self?.authDelegate?.didRequestAuthorization(success: status == .authorized)
-                if status == .authorized {
-                    self?.pickerViewController?.setIntialViewController()
-                } else {
-                    self?.reloadContents()
+        if #available(iOS 14, *) {
+            PHPhotoLibrary.requestAuthorization(for: .readWrite) { [weak self] (status) in
+                DispatchQueue.main.async {
+                    self?.authDelegate?.didRequestAuthorization(
+                        success: status == .authorized || status == .limited,
+                        isLimited: status == .limited
+                    )
+                    if status == .authorized || status == .limited {
+                        self?.pickerViewController?.setIntialViewController()
+                    } else {
+                        self?.reloadContents()
+                    }
+                }
+            }
+        } else {
+            PHPhotoLibrary.requestAuthorization { [weak self] (status) in
+                DispatchQueue.main.async {
+                    self?.authDelegate?.didRequestAuthorization(success: status == .authorized, isLimited: false)
+                    if status == .authorized {
+                        self?.pickerViewController?.setIntialViewController()
+                    } else {
+                        self?.reloadContents()
+                    }
                 }
             }
         }
